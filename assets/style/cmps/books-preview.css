@@ -1,4 +1,4 @@
-.books-preview {
+.book-preview {
     text-align: center;
     padding: 0.3em;
     display: flex;
@@ -6,11 +6,11 @@
     align-items: center;
 }
 
-.books-preview h4{
+.book-preview h4{
     text-transform: capitalize;
     color: black;
 }
 
-.books-preview img {
+.book-preview img {
     max-width: 100px;
 }
