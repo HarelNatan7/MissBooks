@@ -43,8 +43,6 @@ export function BooksFilter({ onSetFilter }) {
                 value={filterByToEdit.maxPrice}
                 onChange={handleChange}
             />
-
-            <button>Filter Books!</button>
         </form>
 
     </section>

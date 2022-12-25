@@ -3,6 +3,8 @@ const { useState, useEffect } = React
 import { BooksFilter } from '../cmps/books-filter.jsx';
 import { BooksList } from '../cmps/books-list.jsx';
 import { BookDetails } from '../cmps/book-details.jsx';
+import { UserMsg } from '../cmps/user-msg.jsx';
+
 
 import { booksService } from './../services/books.service.js';
 
@@ -15,8 +17,8 @@ export function BooksIndex() {
 
     useEffect(() => {
         loadBooks()
-    },[filterBy])
-    
+    }, [filterBy])
+
     function loadBooks() {
         booksService.query(filterBy).then(booksToUpdate => setBooks(booksToUpdate))
     }
@@ -49,9 +51,9 @@ export function BooksIndex() {
     return <section className="books-index ">
         {userMsg && <UserMsg msg={userMsg} />}
         {!selectedBook && <div>
-        <h1>Hello from Books Index!</h1>
-        <BooksFilter onSetFilter={onSetFilter} />
-        <BooksList books={books} onRemoveBook={onRemoveBook} onSelectBook={onSelectBook} />
+            <h1>Hello from Books Index!</h1>
+            <BooksFilter onSetFilter={onSetFilter} />
+            <BooksList books={books} onRemoveBook={onRemoveBook} onSelectBook={onSelectBook} />
         </div>}
 
         {selectedBook && <BookDetails

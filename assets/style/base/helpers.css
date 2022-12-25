@@ -26,6 +26,14 @@
     color: var(--clr1);
 }
 
+.red {
+    color: red;
+}
+
+.green {
+    color: green;
+}
+
 /* list helpers */
 
 .clean-list {
