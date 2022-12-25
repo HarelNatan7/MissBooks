@@ -31,8 +31,6 @@ export function BookDetails({ book, onGoBack }) {
         return dynClass
     }
 
-
-
     return <section className="book-details">
         <h2>Title : {book.title}</h2>
         <h3>Subtitle : {book.subtitle}</h3>
@@ -41,7 +39,6 @@ export function BookDetails({ book, onGoBack }) {
         <h4>Pages Count: {bookPageCount}</h4>
         {book.listPrice.isOnSale && <h2 className="green">On Sale Right Now ! </h2>}
         <img src={book.thumbnail} />
-        {/* <p>{book.description}</p> */}
         <LongTxt txt={book.description} length={100} />
         <button onClick={onGoBack}>Go Back</button>
     </section>

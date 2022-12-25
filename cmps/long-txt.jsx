@@ -21,11 +21,11 @@ export function LongTxt({ txt, length }) {
         {txt.length > length && <div>
             {!isReadMore && <div>
                 {firstTxt}
-                <button onClick={() => showLessOrMore()}>Read More</button>
+                <button className="read-btn" onClick={() => showLessOrMore()}>Read More...</button>
             </div>}
             {isReadMore && <div>
                 {txt}
-                <button onClick={() => showLessOrMore()}>Read less</button>
+                <button className="read-btn" onClick={() => showLessOrMore()}>Read less</button>
             </div>
             }
         </div>}

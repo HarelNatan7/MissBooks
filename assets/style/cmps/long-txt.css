@@ -1,0 +1,10 @@
+.read-btn {
+    background-color: var(--gray3);
+    color: lightskyblue;
+}
+.read-btn:hover {
+    background-color: var(--gray3);
+    color: lightskyblue;
+    scale: 1.1;
+    opacity: 1;
+}

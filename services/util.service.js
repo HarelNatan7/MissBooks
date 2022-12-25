@@ -6,7 +6,7 @@ export const utilService = {
     saveToStorage
 }
 
-function makeId(length = 6) {
+function makeId(length = 7) {
     var txt = ''
     var possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'
 

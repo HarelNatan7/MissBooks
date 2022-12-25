@@ -1,0 +1,26 @@
+.about-header {
+display: flex;
+flex-direction: column;
+align-items: center;
+justify-content: center;
+font-size: xxx-large;
+font-size: 5rem;
+}
+
+.about-header img {
+    margin-top: 5px;
+    height: 30%;
+    width: 30%;
+    border-radius: 50%;
+}
+
+.about h3 {
+    font-size: xx-large;
+    text-align: center;
+}
+
+@media(max-width: 720px) {
+    .about-header {
+        font-size: 3rem;
+    }
+  }

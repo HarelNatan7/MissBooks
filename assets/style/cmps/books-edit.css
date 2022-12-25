@@ -1,3 +1,16 @@
-.car-edit {
-    
+
+
+.add-book-container {
+    padding: 7px;
+    background-color: var(--clr2bg);
+}
+
+.add-book-container form {
+    display: grid;
+    grid-template-columns: 100px 200px;
+}
+
+.add-book-container button {
+    background-color: var(--gray1);
+    color: var(--gray3);
 }

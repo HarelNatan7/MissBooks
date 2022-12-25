@@ -3,6 +3,7 @@ const { useState, useEffect } = React
 import { BooksFilter } from '../cmps/books-filter.jsx';
 import { BooksList } from '../cmps/books-list.jsx';
 import { BookDetails } from '../cmps/book-details.jsx';
+import { BookEdit } from '../cmps/book-edit.jsx';
 import { UserMsg } from '../cmps/user-msg.jsx';
 
 
@@ -41,6 +42,15 @@ export function BooksIndex() {
         })
     }
 
+    function onAddNewBook(newBook) {
+        console.log(newBook);
+        booksService.post(newBook).then((newBook) => {
+            setBooks(prevBooks => {
+                return [...prevBooks, newBook]
+            })
+        })
+    }
+
     function flashMsg(msg) {
         setUserMsg(msg)
         setTimeout(() => {
@@ -51,8 +61,11 @@ export function BooksIndex() {
     return <section className="books-index ">
         {userMsg && <UserMsg msg={userMsg} />}
         {!selectedBook && <div>
-            <h1>Hello from Books Index!</h1>
-            <BooksFilter onSetFilter={onSetFilter} />
+            <div className="panel-container">
+                <BooksFilter onSetFilter={onSetFilter} />
+                <hr />
+                <BookEdit onAddNewBook={onAddNewBook} />
+            </div>
             <BooksList books={books} onRemoveBook={onRemoveBook} onSelectBook={onSelectBook} />
         </div>}
 

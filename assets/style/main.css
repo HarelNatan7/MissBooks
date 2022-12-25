@@ -11,6 +11,7 @@
 
 /* Views */
 @import 'views/home.css';
+@import 'views/about.css';
 
 /* Components */
 @import 'cmps/app-header.css';
@@ -20,3 +21,4 @@
 @import 'cmps/books-preview.css';
 @import 'cmps/books-details.css';
 @import 'cmps/books-edit.css';
+@import 'cmps/long-txt.css';

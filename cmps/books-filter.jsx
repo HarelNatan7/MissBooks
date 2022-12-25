@@ -43,6 +43,20 @@ export function BooksFilter({ onSetFilter }) {
                 value={filterByToEdit.maxPrice}
                 onChange={handleChange}
             />
+            <label htmlFor="language">By Lang: </label>
+            <select name="language" id="language" onChange={handleChange}>
+                <option value="">Select</option>
+                <option value="he">Hebrew</option>
+                <option value="en">English</option>
+                <option value="sp">spanish</option>
+            </select>
+            <label htmlFor="onSale">On Sale: </label>
+            <input type="checkbox"
+                id="onSale"
+                name="onSale"
+                value={filterByToEdit.onSale}
+                onChange={handleChange} />
+
         </form>
 
     </section>
