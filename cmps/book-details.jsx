@@ -1,4 +1,4 @@
-
+import { LongTxt } from '../cmps/long-txt.jsx';
 
 export function BookDetails({ book, onGoBack }) {
 
@@ -26,9 +26,9 @@ export function BookDetails({ book, onGoBack }) {
 
     function checkBookPrice() {
         let dynClass = ''
-         if (book.listPrice.amount > 150) dynClass = 'red'
-         else if (book.listPrice.amount < 20) dynClass = 'green'
-         return dynClass
+        if (book.listPrice.amount > 150) dynClass = 'red'
+        else if (book.listPrice.amount < 20) dynClass = 'green'
+        return dynClass
     }
 
 
@@ -41,7 +41,8 @@ export function BookDetails({ book, onGoBack }) {
         <h4>Pages Count: {bookPageCount}</h4>
         {book.listPrice.isOnSale && <h2 className="green">On Sale Right Now ! </h2>}
         <img src={book.thumbnail} />
-        <p>{book.description}</p>
+        {/* <p>{book.description}</p> */}
+        <LongTxt txt={book.description} length={100} />
         <button onClick={onGoBack}>Go Back</button>
     </section>
 }
