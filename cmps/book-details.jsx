@@ -2,29 +2,31 @@ const { useEffect, useState } = React
 const { useParams, useNavigate, Link } = ReactRouterDOM
 
 import { LongTxt } from '../cmps/long-txt.jsx';
+import { AddReview } from '../cmps/add-review.jsx';
 
-import { booksService } from './../services/books.service.js';
+import { bookService } from './../services/book.service.js';
 
 export function BookDetails() {
 
+    const [isAddReview, setIsAddReview] = useState(false)
     const [book, setBook] = useState(null)
-    const {bookId} = useParams()
+    const { bookId } = useParams()
     const navigate = useNavigate()
     const date = (new Date).getFullYear()
 
     useEffect(() => {
         loadBook()
     }, [bookId])
-    
+
     function loadBook() {
-        booksService.get(bookId)
-        .then((book) => setBook(book))
-        .catch((err) => {
-            console.log('Had issues in book details', err)
-            navigate('/book')
-        })
+        bookService.get(bookId)
+            .then((book) => setBook(book))
+            .catch((err) => {
+                console.log('Had issues in book details', err)
+                navigate('/book')
+            })
     }
-    
+
     function checkBookReading() {
         let strPagesCount = ''
         if (book.pageCount > 500) strPagesCount = book.pageCount + ' Serious Reading'
@@ -62,7 +64,24 @@ export function BookDetails() {
         {book.listPrice.isOnSale && <h2 className="green">On Sale Right Now ! </h2>}
         <img src={book.thumbnail} />
         <LongTxt txt={book.description} length={100} />
-        <button onClick={onGoBack}>Go Back</button>
+        <div className="btn-book-details flex">
         <Link to={`/book/edit/${book.id}`}>Edit Book</Link>
+        <button onClick={onGoBack}>Go Back</button>
+        <button onClick={() => setIsAddReview(!isAddReview)}>{isAddReview ? 'Close Review' : 'Add Review'}</button>
+        </div>
+        {isAddReview && <div>
+            <AddReview bookId={bookId}/>
+        </div>}
+
+        {book.reviews && <div className="book-reviews">
+            <h2>Book Reviews: </h2>
+            {book.reviews.map(review => {
+                return <section className="review">
+                <label>Full Name: {review.fullname}</label>
+                <label>Rate: {review.rate}</label>
+                <label>Read At: {review.date}</label>
+                </section>
+            })}
+        </div>}
     </section>
 }

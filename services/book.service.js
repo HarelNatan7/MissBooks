@@ -4,14 +4,26 @@ import { storageService } from './async-storage.service.js'
 const BOOKS_KEY = 'booksDB'
 _createBooks()
 
-export const booksService = {
+export const bookService = {
   query,
   get,
   post,
   remove,
   save,
   getDefaultFilter,
-  getEmptyBook
+  getEmptyBook,
+  addReview
+}
+
+function addReview(bookId, review) {
+console.log('bookId 7:', bookId)
+console.log('review:', review)
+get(bookId).then(book => {
+  if (!book['reviews']) book['reviews'] = []
+  book['reviews'].unshift(review)
+  save(book)
+  console.log('book:', book)
+})
 }
 
 function query(filterBy = getDefaultFilter()) {
@@ -31,7 +43,6 @@ function query(filterBy = getDefaultFilter()) {
         const regex = new RegExp(filterBy.language, 'i')
         books = books.filter(book => regex.test(book.language))
       }
-
       return books
     })
 }
@@ -100,7 +111,6 @@ function getEmptyBook() {
       isOnSale: false
     }
   }
-  // return book
 }
 
 function getDefaultFilter() {

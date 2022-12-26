@@ -5,14 +5,14 @@ import { BooksFilter } from '../cmps/books-filter.jsx';
 import { BooksList } from '../cmps/books-list.jsx';
 import { UserMsg } from '../cmps/user-msg.jsx';
 
-import { booksService } from './../services/books.service.js';
+import { bookService } from './../services/book.service.js';
 import { showErrorMsg, showSuccessMsg } from '../services/event-bus.service.js';
 
 export function BooksIndex() {
 
     const [books, setBooks] = useState([])
     const [isLoading, setIsLoading] = useState(false)
-    const [filterBy, setFilterBy] = useState(booksService.getDefaultFilter())
+    const [filterBy, setFilterBy] = useState(bookService.getDefaultFilter())
 
     useEffect(() => {
         setIsLoading(true)
@@ -20,7 +20,7 @@ export function BooksIndex() {
     }, [filterBy])
 
     function loadBooks() {
-        booksService.query(filterBy).then(booksToUpdate => {
+        bookService.query(filterBy).then(booksToUpdate => {
             setBooks(booksToUpdate)
             setIsLoading(false)
         })
@@ -31,7 +31,7 @@ export function BooksIndex() {
     }
 
     function onRemoveBook(bookId) {
-        booksService.remove(bookId).then(() => {
+        bookService.remove(bookId).then(() => {
             const updatedBooks = books.filter(book => book.id !== bookId)
             setBooks(updatedBooks)
             showSuccessMsg('Book removed')
