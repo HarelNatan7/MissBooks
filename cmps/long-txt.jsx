@@ -14,7 +14,7 @@ export function LongTxt({ txt, length }) {
         setIsReadMore(!isReadMore)
     }
 
-    return <p>
+    return <div>
         {txt.length < length && <div>
             {txt}
         </div>}
@@ -29,5 +29,5 @@ export function LongTxt({ txt, length }) {
             </div>
             }
         </div>}
-    </p>
+    </div>
 }

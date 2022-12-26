@@ -1,3 +1,4 @@
+const { Outlet, Link } = ReactRouterDOM
 
 export function AboutUs() {
 
@@ -10,6 +11,10 @@ export function AboutUs() {
             I made this Book Store while doing The Coding
             Academy Bootcamp, Thats was my first react project
             You Have here a nice examples for the
-             power of react, Enjoy 😎</h3>
+            power of react, Enjoy 😎</h3>
+
+        {/* <div className="nested-route">
+            <Outlet />
+        </div> */}
     </section>
 }

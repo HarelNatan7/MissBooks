@@ -11,6 +11,7 @@ export const booksService = {
   remove,
   save,
   getDefaultFilter,
+  getEmptyBook
 }
 
 function query(filterBy = getDefaultFilter()) {
@@ -53,12 +54,12 @@ function post(newBook) {
     "thumbnail": "http://coding-academy.org/books-photos/7.jpg",
     "language": "en",
     "listPrice": {
-      "amount": newBook.price,
+      "amount": newBook.listPrice.amount,
       "currencyCode": "USD",
       "isOnSale": false
     }
   }
-  storageService.post(BOOKS_KEY, book)
+  return storageService.post(BOOKS_KEY, book)
 }
 
 function get(bookId) {
@@ -73,8 +74,33 @@ function save(book) {
   if (book.id) {
     return storageService.put(BOOKS_KEY, book)
   } else {
-    return storageService.post(BOOKS_KEY, book)
+    return post(book)
   }
+}
+
+function getEmptyBook() {
+  return {
+    title: '',
+    subtitle: 'mi est eros convallis auctor arcu dapibus himenaeos',
+    authors: [
+      'Barbara Cartland'
+    ],
+    publishedDate: utilService.getRandomIntInclusive(1930, 2023),
+    description: 'placerat nisi sodales suscipit tellus tincidunt mauris elit sit luctus interdum ad dictum suspendisse',
+    pageCount: utilService.getRandomIntInclusive(70, 900),
+    categories: [
+      'Computers',
+      'Hack'
+    ],
+    thumbnail: `http://coding-academy.org/books-photos/${utilService.getRandomIntInclusive(1, 20)}.jpg`,
+    language: 'en',
+    listPrice: {
+      amount: '',
+      currencyCode: 'EUR',
+      isOnSale: false
+    }
+  }
+  // return book
 }
 
 function getDefaultFilter() {

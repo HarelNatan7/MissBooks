@@ -1,27 +1,29 @@
 const { useState, useEffect } = React
+const { Link } = ReactRouterDOM
 
 import { BooksFilter } from '../cmps/books-filter.jsx';
 import { BooksList } from '../cmps/books-list.jsx';
-import { BookDetails } from '../cmps/book-details.jsx';
-import { BookEdit } from '../cmps/book-edit.jsx';
 import { UserMsg } from '../cmps/user-msg.jsx';
 
-
 import { booksService } from './../services/books.service.js';
+import { showErrorMsg, showSuccessMsg } from '../services/event-bus.service.js';
 
 export function BooksIndex() {
 
     const [books, setBooks] = useState([])
-    const [selectedBook, setSelectedBook] = useState(null)
+    const [isLoading, setIsLoading] = useState(false)
     const [filterBy, setFilterBy] = useState(booksService.getDefaultFilter())
-    const [userMsg, setUserMsg] = useState('')
 
     useEffect(() => {
+        setIsLoading(true)
         loadBooks()
     }, [filterBy])
 
     function loadBooks() {
-        booksService.query(filterBy).then(booksToUpdate => setBooks(booksToUpdate))
+        booksService.query(filterBy).then(booksToUpdate => {
+            setBooks(booksToUpdate)
+            setIsLoading(false)
+        })
     }
 
     function onSetFilter(filterByFromFilter) {
@@ -32,46 +34,23 @@ export function BooksIndex() {
         booksService.remove(bookId).then(() => {
             const updatedBooks = books.filter(book => book.id !== bookId)
             setBooks(updatedBooks)
-            flashMsg('Book removed!')
+            showSuccessMsg('Book removed')
         })
-    }
-
-    function onSelectBook(bookId) {
-        booksService.get(bookId).then((book) => {
-            setSelectedBook(book)
+        .catch((err) => {
+            console.log('Had issues removing', err)
+            showErrorMsg('Could not remove book, try again please!')
         })
-    }
-
-    function onAddNewBook(newBook) {
-        console.log(newBook);
-        booksService.post(newBook).then((newBook) => {
-            setBooks(prevBooks => {
-                return [...prevBooks, newBook]
-            })
-        })
-    }
-
-    function flashMsg(msg) {
-        setUserMsg(msg)
-        setTimeout(() => {
-            setUserMsg('')
-        }, 3000)
     }
 
     return <section className="books-index ">
         {userMsg && <UserMsg msg={userMsg} />}
-        {!selectedBook && <div>
             <div className="panel-container">
                 <BooksFilter onSetFilter={onSetFilter} />
                 <hr />
-                <BookEdit onAddNewBook={onAddNewBook} />
+                <Link to="/book/edit">Add Book</Link>
             </div>
-            <BooksList books={books} onRemoveBook={onRemoveBook} onSelectBook={onSelectBook} />
-        </div>}
+            {!isLoading && <BooksList books={books} onRemoveBook={onRemoveBook} />}
+            {isLoading && <div>Loading..</div>}
 
-        {selectedBook && <BookDetails
-            book={selectedBook}
-            onGoBack={() => setSelectedBook(null)}
-        />}
     </section>
 }
