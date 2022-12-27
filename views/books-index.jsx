@@ -3,6 +3,7 @@ const { Link } = ReactRouterDOM
 
 import { BooksFilter } from '../cmps/books-filter.jsx';
 import { BooksList } from '../cmps/books-list.jsx';
+import { BookAdd } from '../cmps/book-add.jsx';
 import { UserMsg } from '../cmps/user-msg.jsx';
 
 import { bookService } from './../services/book.service.js';
@@ -36,21 +37,30 @@ export function BooksIndex() {
             setBooks(updatedBooks)
             showSuccessMsg('Book removed')
         })
-        .catch((err) => {
-            console.log('Had issues removing', err)
-            showErrorMsg('Could not remove book, try again please!')
-        })
+            .catch((err) => {
+                console.log('Had issues removing', err)
+                showErrorMsg('Could not remove book, try again please!')
+            })
+    }
+
+    function onAddBook(book) {
+        bookService.addGoogleBook(book)
+            .then(newBook => {
+                setBooks(prevBooks => [...prevBooks, newBook])
+            })
+            .catch(console.log)
     }
 
     return <section className="books-index ">
         {userMsg && <UserMsg msg={userMsg} />}
-            <div className="panel-container">
-                <BooksFilter onSetFilter={onSetFilter} />
-                <hr />
-                <Link to="/book/edit">Add Book</Link>
-            </div>
-            {!isLoading && <BooksList books={books} onRemoveBook={onRemoveBook} />}
-            {isLoading && <div>Loading..</div>}
+        <div className="panel-container">
+            <BooksFilter onSetFilter={onSetFilter} />
+            <hr />
+            <Link to="/book/edit">Add Book Hard Coded</Link>
+            <BookAdd onAddBook={onAddBook} />
+        </div>
+        {!isLoading && <BooksList books={books} onRemoveBook={onRemoveBook} />}
+        {isLoading && <div>Loading..</div>}
 
     </section>
 }

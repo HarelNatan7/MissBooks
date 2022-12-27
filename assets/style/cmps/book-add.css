@@ -1,0 +1,15 @@
+.search-book-form {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+}
+
+.add-book-api-container ul {
+    position: absolute;
+    color: black;
+    background-color: var(--gray1);
+}
+
+.add-book-api-container li {
+    list-style: none;
+}

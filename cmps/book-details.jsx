@@ -8,6 +8,8 @@ import { bookService } from './../services/book.service.js';
 
 export function BookDetails() {
 
+    const [nextBookId, setNextBookId] = useState(null)
+    const [prevBookId, setPrevBookId] = useState(null)
     const [isAddReview, setIsAddReview] = useState(false)
     const [book, setBook] = useState(null)
     const { bookId } = useParams()
@@ -25,6 +27,11 @@ export function BookDetails() {
                 console.log('Had issues in book details', err)
                 navigate('/book')
             })
+
+            bookService.getNextBookId(bookId)
+            .then(setNextBookId)
+            bookService.getPrevBookId(bookId)
+            .then(setPrevBookId)
     }
 
     function checkBookReading() {
@@ -66,6 +73,8 @@ export function BookDetails() {
         <LongTxt txt={book.description} length={100} />
         <div className="btn-book-details flex">
         <Link to={`/book/edit/${book.id}`}>Edit Book</Link>
+        <Link to={`/book/${prevBookId}`}>Previous Book</Link>
+        <Link to={`/book/${nextBookId}`}>Next Book</Link>
         <button onClick={onGoBack}>Go Back</button>
         <button onClick={() => setIsAddReview(!isAddReview)}>{isAddReview ? 'Close Review' : 'Add Review'}</button>
         </div>

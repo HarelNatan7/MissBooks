@@ -12,18 +12,64 @@ export const bookService = {
   save,
   getDefaultFilter,
   getEmptyBook,
-  addReview
+  addReview,
+  getNextBookId,
+  getPrevBookId,
+  addGoogleBook
+}
+
+function addGoogleBook(googleBook) {
+  
+  const book = {
+    "id": googleBook.id,
+    "title": googleBook.title,
+    "subtitle": "neque eu purus euismod placerat adipiscing odio egestas consequat",
+    "authors": [
+      "Leo Tolstoy"
+    ],
+    "publishedDate": googleBook.publishedDate,
+    "description": googleBook.description,
+    "pageCount": googleBook.pageCount,
+    "categories": [
+      "Computers",
+      "Hack"
+    ],
+    "thumbnail": googleBook.img,
+    "language": googleBook.language,
+    "listPrice": {
+      "amount": utilService.getRandomIntInclusive(40, 700),
+      "currencyCode": "USD",
+      "isOnSale": false
+    }
+  }
+   storageService.post(BOOKS_KEY, book)
+   return Promise.resolve(book)
+}
+
+function getNextBookId(bookId) {
+  return storageService.query(BOOKS_KEY)
+    .then(books => {
+      var idx = books.findIndex(book => book.id === bookId)
+      if (idx === books.length - 1) idx = -1
+      return books[idx + 1].id
+    })
+}
+function getPrevBookId(bookId) {
+  return storageService.query(BOOKS_KEY)
+    .then(books => {
+      var idx = books.findIndex(book => book.id === bookId)
+      if (!idx) idx = books.length
+      return books[idx - 1].id
+    })
 }
 
 function addReview(bookId, review) {
-console.log('bookId 7:', bookId)
-console.log('review:', review)
-get(bookId).then(book => {
-  if (!book['reviews']) book['reviews'] = []
-  book['reviews'].unshift(review)
-  save(book)
-  console.log('book:', book)
-})
+  get(bookId).then(book => {
+    if (!book['reviews']) book['reviews'] = []
+    book['reviews'].unshift(review)
+    save(book)
+    console.log('book:', book)
+  })
 }
 
 function query(filterBy = getDefaultFilter()) {
